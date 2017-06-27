@@ -1,3 +1,6 @@
+%% compile and invoke simulate() to start the program,
+%% https://www.reddit.com/r/dailyprogrammer/comments/6h9woe/20160614_challenge_319_intermediate_worm_wars_1/
+%% No bonus
 -module(sir_model).
 -export ([simulate/0]).
 
@@ -8,7 +11,6 @@ simulate() ->
 sir(Systems, Infected, SI, IR, SR) ->
     print_stats(Systems - Infected, Infected, 0, 0),
     sir_simulation(Systems - Infected, Infected, 0, SI, IR, SR, 1).
-
 
 sir_simulation(0, 0, _, _, _, _, Iteration) ->
     print_finish(Iteration);
@@ -23,7 +25,6 @@ sir_simulation(S, I, R, SI, IR, SR, Iteration) ->
     print_stats(New_s, New_i, New_r, Iteration),
     sir_simulation(New_s, New_i, New_r, SI, IR, SR, Iteration + 1).
 
-
 simulate_change(0, _, Remaining) ->
     Remaining;
 simulate_change(Systems, Proba, Remaining) ->
@@ -35,11 +36,11 @@ simulate_change(Systems, Proba, Remaining) ->
     end.
 
 system_state_changed(Proba)->
-    Proba > rand:uniform().
+    Proba < rand:uniform().
 
-% IO part of the system
+% IO part of the program
 print_finish(Iteration) ->
-    io:format("On gention ~w simualton ened with all systems resistant", [Iteration]).
+    io:format("On genaration ~w simulation ended with all systems resistant\n", [Iteration]).
 
 print_stats(S, I, R, Gen) ->
     SIR_size = length(integer_to_list(S + I + R)),
